@@ -1,5 +1,7 @@
 package com.zfl19.itbp.model.vo;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zfl19.itbp.model.entity.Question;
 import com.zfl19.itbp.model.entity.QuestionBank;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
@@ -52,6 +54,11 @@ public class QuestionBankVO implements Serializable {
      * 创建用户信息
      */
     private UserVO user;
+
+    /**
+     * 题库的题目分页列表
+     */
+    Page<Question> questionPage;
 
     /**
      * 封装类转对象

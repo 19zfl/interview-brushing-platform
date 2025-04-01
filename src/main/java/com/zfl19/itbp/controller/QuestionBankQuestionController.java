@@ -1,5 +1,7 @@
 package com.zfl19.itbp.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zfl19.itbp.annotation.AuthCheck;
 import com.zfl19.itbp.common.BaseResponse;
@@ -11,6 +13,7 @@ import com.zfl19.itbp.exception.BusinessException;
 import com.zfl19.itbp.exception.ThrowUtils;
 import com.zfl19.itbp.model.dto.questionBankQuestion.QuestionBankQuestionAddRequest;
 import com.zfl19.itbp.model.dto.questionBankQuestion.QuestionBankQuestionQueryRequest;
+import com.zfl19.itbp.model.dto.questionBankQuestion.QuestionBankQuestionRemoveRequest;
 import com.zfl19.itbp.model.dto.questionBankQuestion.QuestionBankQuestionUpdateRequest;
 import com.zfl19.itbp.model.entity.QuestionBankQuestion;
 import com.zfl19.itbp.model.entity.User;
@@ -199,4 +202,23 @@ public class QuestionBankQuestionController {
         return ResultUtils.success(questionBankQuestionService.getQuestionBankQuestionVOPage(questionBankQuestionPage, request));
     }
     // endregion
+
+    /**
+     * 移除题库题目关联
+     * @param questionBankQuestionRemoveRequest
+     * @return
+     */
+    @PostMapping("/remove")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public BaseResponse<Boolean> removeQuestionBankQuestion(@RequestBody QuestionBankQuestionRemoveRequest questionBankQuestionRemoveRequest) {
+        ThrowUtils.throwIf(questionBankQuestionRemoveRequest == null, ErrorCode.PARAMS_ERROR);
+        Long questionBankId = questionBankQuestionRemoveRequest.getQuestionBankId();
+        Long questionId = questionBankQuestionRemoveRequest.getQuestionId();
+        LambdaQueryWrapper<QuestionBankQuestion> lambdaQueryWrapper = Wrappers.lambdaQuery(QuestionBankQuestion.class)
+                .eq(QuestionBankQuestion::getQuestionBankId, questionBankId)
+                .eq(QuestionBankQuestion::getQuestionId, questionId);
+        boolean result = questionBankQuestionService.remove(lambdaQueryWrapper);
+        return ResultUtils.success(result);
+    }
+
 }
