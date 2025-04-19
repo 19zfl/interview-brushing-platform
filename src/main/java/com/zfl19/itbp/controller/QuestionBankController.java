@@ -18,6 +18,7 @@ import com.zfl19.itbp.model.entity.Question;
 import com.zfl19.itbp.model.entity.QuestionBank;
 import com.zfl19.itbp.model.entity.User;
 import com.zfl19.itbp.model.vo.QuestionBankVO;
+import com.zfl19.itbp.model.vo.QuestionVO;
 import com.zfl19.itbp.service.QuestionBankService;
 import com.zfl19.itbp.service.QuestionService;
 import com.zfl19.itbp.service.UserService;
@@ -151,7 +152,8 @@ public class QuestionBankController {
             QuestionQueryRequest questionQueryRequest = new QuestionQueryRequest();
             questionQueryRequest.setQuestionBankId(id);
             Page<Question> questionPage = questionService.listQuestionByPage(questionQueryRequest);
-            questionBankVO.setQuestionPage(questionPage);
+            Page<QuestionVO> questionVOPage = questionService.getQuestionVOPage(questionPage, request);
+            questionBankVO.setQuestionPage(questionVOPage);
         }
         // 获取封装类
         return ResultUtils.success(questionBankVO);
