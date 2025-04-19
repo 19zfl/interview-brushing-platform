@@ -6,6 +6,7 @@ import com.zfl19.itbp.model.dto.user.UserQueryRequest;
 import com.zfl19.itbp.model.entity.User;
 import com.zfl19.itbp.model.vo.LoginUserVO;
 import com.zfl19.itbp.model.vo.UserVO;
+
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
@@ -116,4 +117,19 @@ public interface UserService extends IService<User> {
      */
     QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest);
 
+    /**
+     * 用户签到
+     * @param userId 用户id
+     * @return 当前用户是否已签到成功
+     */
+    boolean addUserSignIn(long userId);
+
+    /**
+     * 获取用户某个年份的签到记录
+     *
+     * @param userId 用户id
+     * @param year   年份（为空表示当前年份）
+     * @return 签到日期
+     */
+    List<Integer> getUserSignInRecord(long userId, Integer year);
 }
