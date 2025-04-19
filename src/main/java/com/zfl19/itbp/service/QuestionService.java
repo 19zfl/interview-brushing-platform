@@ -3,7 +3,9 @@ package com.zfl19.itbp.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zfl19.itbp.model.dto.post.PostQueryRequest;
 import com.zfl19.itbp.model.dto.question.QuestionQueryRequest;
+import com.zfl19.itbp.model.entity.Post;
 import com.zfl19.itbp.model.entity.Question;
 import com.zfl19.itbp.model.vo.QuestionVO;
 
@@ -55,4 +57,12 @@ public interface QuestionService extends IService<Question> {
      * @return
      */
     Page<Question> listQuestionByPage(QuestionQueryRequest questionQueryRequest);
+
+    /**
+     * 从 ES 查询
+     *
+     * @param questionQueryRequest
+     * @return
+     */
+    Page<Question> searchFromEs(QuestionQueryRequest questionQueryRequest);
 }
