@@ -330,6 +330,13 @@ public class UserController {
         return ResultUtils.success(isSignIn);
     }
 
+    /**
+     * 获取用户某个年份的签到记录
+     *
+     * @param year
+     * @param request
+     * @return 签到记录
+     */
     @GetMapping("/get/sign_in")
     public BaseResponse<List<Integer>> getUserSignInRecord(Integer year, HttpServletRequest request) {
         User loginUser = userService.getLoginUser(request);

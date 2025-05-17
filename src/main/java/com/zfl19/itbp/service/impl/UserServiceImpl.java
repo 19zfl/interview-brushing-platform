@@ -283,7 +283,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public boolean addUserSignIn(long userId) {
+        // 获取当前日期
         LocalDate date = LocalDate.now();
+        // 获取存入 Redis 中的 key
         String key = RedisConstant.getUserSignInRedisKey(date.getYear(), userId);
         // 获取 Redis 的 BitMap
         RBitSet signInBitSet = redissonClient.getBitSet(key);
